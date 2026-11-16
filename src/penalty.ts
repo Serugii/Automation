@@ -13,5 +13,6 @@ function assertValidDays(daysOverdue: number): void {
 export function calcPenalty(debt: number, daysOverdue: number): number {
   assertValidDebt(debt);
   assertValidDays(daysOverdue);
-  return 0;
+  if (daysOverdue <= 3) return 0;
+  return debt * 0.001 * (daysOverdue - 3);
 }
