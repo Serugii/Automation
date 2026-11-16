@@ -14,4 +14,7 @@ describe('calcPenalty', () => {
       expect(() => calcPenalty(1000, days)).toThrow('INVALID_DAYS');
     },
   );
+  it.each([0, 1, 3])('пільговий період: %i дн. → пеня 0', (days) => {
+    expect(calcPenalty(1000, days)).toBe(0);
+  });
 });
