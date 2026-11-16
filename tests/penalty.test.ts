@@ -26,4 +26,17 @@ describe('calcPenalty', () => {
   ])('борг $debt, $days дн. → пеня $expected', ({ debt, days, expected }) => {
     expect(calcPenalty(debt, days)).toBeCloseTo(expected, 2);
   });
+  it.each([
+    { debt: 1000, days: 502, expected: 499 },
+    { debt: 1000, days: 503, expected: 500 },
+    { debt: 1000, days: 504, expected: 500 },
+    { debt: 1000, days: 10000, expected: 500 },
+    { debt: 200, days: 503, expected: 100 },
+    { debt: 0, days: 1000, expected: 0 },
+  ])(
+    'обмеження 50 %: борг $debt, $days дн. → $expected',
+    ({ debt, days, expected }) => {
+      expect(calcPenalty(debt, days)).toBeCloseTo(expected, 2);
+    },
+  );
 });
