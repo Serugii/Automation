@@ -39,4 +39,16 @@ describe('calcPenalty', () => {
       expect(calcPenalty(debt, days)).toBeCloseTo(expected, 2);
     },
   );
+  it.each([
+    { debt: 123.45, days: 4, expected: 0.12 },
+    { debt: 126, days: 4, expected: 0.13 },
+    { debt: 999.99, days: 5, expected: 2 },
+    { debt: 1234.56, days: 10, expected: 8.64 },
+    { debt: 777.77, days: 7, expected: 3.11 },
+  ])(
+    'заокруглення до копійок: борг $debt, $days дн. → $expected',
+    ({ debt, days, expected }) => {
+      expect(calcPenalty(debt, days)).toBe(expected);
+    },
+  );
 });
