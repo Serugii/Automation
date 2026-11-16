@@ -1,5 +1,6 @@
 const GRACE_PERIOD_DAYS = 3;
 const DAILY_RATE = 0.001;
+const MAX_PENALTY_RATE = 0.5;
 
 function assertValidDebt(debt: number): void {
   if (!Number.isFinite(debt) || debt < 0) {
@@ -17,5 +18,6 @@ export function calcPenalty(debt: number, daysOverdue: number): number {
   assertValidDebt(debt);
   assertValidDays(daysOverdue);
   if (daysOverdue <= GRACE_PERIOD_DAYS) return 0;
-  return debt * DAILY_RATE * (daysOverdue - GRACE_PERIOD_DAYS);
+  const penalty = debt * DAILY_RATE * (daysOverdue - GRACE_PERIOD_DAYS);
+  return Math.min(penalty, debt * MAX_PENALTY_RATE);
 }
